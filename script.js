@@ -85,7 +85,7 @@ function listInputs(inputs) {
 
 function noteOn(midiNote, velocity) {
     synth.triggerAttack(midiNoteToFreq[midiNote], undefined, velocity);
-    createCircle(midiNote, velocity);
+    createCircle(midiNote, velocity, 2);
 }
 
 function noteOff(midiNote, velocity) {
@@ -97,40 +97,109 @@ function onMIDIFailure(e) {
 }
 
 
-
-// effects
-function randomPosition() {
-    var position = [];
-    var width = window.innerWidth;
-    var height = window.innerHeight;
-    // x position
-    position[0] = Math.floor(Math.random() * width);
-    // y position
-    position[1] = Math.floor(Math.random() * height);
-
-    return position;
+function randomIntFromInterval(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+// effects
 
 
-function createCircle(note, velocity) {
-    console.log(midiNoteToNote[note] + '  ' + velocity)
+function circle(note, velocity, coords, radius, effectName) {
     var circle = document.createElement("DIV");
-    circle.className = "circle fadeOut";
-    circle.style.left = randomPosition()[0] + "px";
-    circle.style.top = randomPosition()[1] + "px";
-    var radius = velocity * 120;
-    circle.style.width = radius + "px";
-    circle.style.height = radius + "px";
 
+    if (effectName) {
+        circle.className = "circle " + effectName;
+    } else {
+        circle.className = "circle fadeOut";
+    }
+
+    if (radius) {
+        //child
+        circle.radius = radius;
+    } else {
+        circle.radius = velocity * 200;
+
+    }
+
+
+    if (coords) {
+        // if child
+        circle.coords = {
+            coordX: coords.coordX,
+            coordY: coords.coordY
+        };
+
+    } else {
+        circle.coords = {
+            coordX: randomIntFromInterval(0, window.innerWidth - circle.radius),
+            coordY: randomIntFromInterval(0, window.innerHeight - circle.radius)
+        };
+
+    }
+
+    circle.style.left = circle.coords.coordX + "px";
+    circle.style.top = circle.coords.coordY + "px";
+    circle.style.width = circle.radius + "px";
+    circle.style.height = circle.radius + "px";
     circle.style.backgroundColor = noteToColor(midiNoteToNote[note], velocity);
 
-    circle.style.animationDuration = 20 * velocity + "s";
-    document.getElementById('effects-layer').appendChild(circle);
-    // remove circle DOM element
+    circle.style.animationDuration = "0.5s";
+
+    return circle;
+}
+
+function createCircle(note, velocity, childsCount) {
+    // console.log(midiNoteToNote[note] + '  ' + velocity)
+
+    var parentCircle = circle(note, velocity);
+
+    var childCircles = [];
+    for (var i = 0; i < childsCount; i++) {
+        var childRadius = randomIntFromInterval((parentCircle.radius / 4), (parentCircle.radius / 2));
+        childCoords = {
+            coordX: randomIntFromInterval((parentCircle.coords.coordX), (parentCircle.coords.coordX + parentCircle.radius / 1.2)),
+            coordY: randomIntFromInterval((parentCircle.coords.coordY), (parentCircle.coords.coordY + parentCircle.radius / 1.2))
+        }
+        childCircles[i] = circle(note, velocity, childCoords, childRadius, 'fadeIn');
+    }
+    var child2Circles = [];
+    for (var i = 0; i < childsCount; i++) {
+        for (var j = 0; j < childsCount; j++) {
+            var child2Radius = randomIntFromInterval((childCircles[i].radius / 4), (childCircles[i].radius / 2));
+            child2Coords = {
+                coordX: randomIntFromInterval((childCircles[i].coords.coordX), (childCircles[i].coords.coordX + childCircles[i].radius / 1.2)),
+                coordY: randomIntFromInterval((childCircles[i].coords.coordY), (childCircles[i].coords.coordY + childCircles[i].radius / 1.2))
+            }
+            child2Circles.push(circle(note, velocity, child2Coords, child2Radius));
+        }
+    }
+
+    document.getElementById('effects-layer').appendChild(parentCircle);
+
+    var timer = 500;
+
     setTimeout(function() {
-        document.body.removeChild(circle);
-    }, 50000);
+        // remove parent circle DOM element
+        document.getElementById('effects-layer').removeChild(parentCircle);
+
+        // create childs
+        for (var i = 0; i < childsCount; i++) {
+            document.getElementById('effects-layer').appendChild(childCircles[i]);
+        }
+        setTimeout(function() {
+            // remove childs
+            for (var i = 0; i < childsCount; i++) {
+                document.getElementById('effects-layer').removeChild(childCircles[i])
+            }
+
+            // create new childs
+            for (var i = 0; i < child2Circles.length; i++) {
+                document.getElementById('effects-layer').appendChild(child2Circles[i]);
+            }
+        }, timer)
+
+
+    }, timer);
 }
 
 function noteToColor(note, velocity) {
