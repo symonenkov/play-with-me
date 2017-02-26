@@ -5,6 +5,7 @@
     "main": "script.js",
     "start": "node server.js",
     "dependencies": {
+        "express": "^4.14.1",
         "tone": "^0.9.0"
     },
     "devDependencies": {},
