@@ -1,17 +1,18 @@
 {
-    "name": "roboteacher",
-    "version": "1.0.0",
-    "description": "",
-    "main": "script.js",
-    "start": "node server.js",
-    "dependencies": {
-        "express": "^4.14.1",
-        "tone": "^0.9.0"
-    },
-    "devDependencies": {},
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "",
-    "license": "ISC"
+  "name": "roboteacher",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "start": "node server.js",
+  "dependencies": {
+    "express": "^4.14.1",
+    "socket.io": "^1.7.3",
+    "tone": "^0.9.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
 }

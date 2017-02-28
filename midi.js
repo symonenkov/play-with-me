@@ -86,10 +86,12 @@ function listInputs(inputs) {
 function noteOn(midiNote, velocity) {
     synth.triggerAttack(midiNoteToFreq[midiNote], undefined, velocity);
     createCircle(midiNote, velocity, 2);
+    sendNoteOn({ midiNote, velocity });
 }
 
 function noteOff(midiNote, velocity) {
     synth.triggerRelease(midiNoteToFreq[midiNote]);
+    sendNoteOff({ midiNote, velocity });
 }
 
 function onMIDIFailure(e) {
@@ -182,21 +184,21 @@ function createCircle(note, velocity, childsCount) {
         // remove parent circle DOM element
         document.getElementById('effects-layer').removeChild(parentCircle);
 
-        // create childs
-        for (var i = 0; i < childsCount; i++) {
-            document.getElementById('effects-layer').appendChild(childCircles[i]);
-        }
-        setTimeout(function() {
-            // remove childs
-            for (var i = 0; i < childsCount; i++) {
-                document.getElementById('effects-layer').removeChild(childCircles[i])
-            }
+        // // create childs
+        // for (var i = 0; i < childsCount; i++) {
+        //     document.getElementById('effects-layer').appendChild(childCircles[i]);
+        // }
+        // setTimeout(function() {
+        //     // remove childs
+        //     for (var i = 0; i < childsCount; i++) {
+        //         document.getElementById('effects-layer').removeChild(childCircles[i])
+        //     }
 
-            // create new childs
-            for (var i = 0; i < child2Circles.length; i++) {
-                document.getElementById('effects-layer').appendChild(child2Circles[i]);
-            }
-        }, timer)
+        //     // create new childs
+        //     for (var i = 0; i < child2Circles.length; i++) {
+        //         document.getElementById('effects-layer').appendChild(child2Circles[i]);
+        //     }
+        // }, timer)
 
 
     }, timer);
