@@ -6,7 +6,17 @@ var data, cmd, channel, type, note, velocity;
 
 //create a synth and connect it to the master output (your speakers)
 var multiband = new Tone.MultibandCompressor()
-var synth = new Tone.PolySynth(4, Tone.AMSynth).toMaster();
+
+
+var synth = new Tone.PolySynth(2, Tone.AMSynth).toMaster();
+synth.volume.value = '-12';
+// var synth = new Tone.Synth().toMaster();
+
+// var synth = new Tone.PolySynth(2, Tone.Synth, {
+//     "oscillator": {
+//         "partials": [0, 2, 3, 4],
+//     }
+// }).toMaster();
 
 
 // create MIDI note table to conver midinote to frequency
@@ -84,14 +94,14 @@ function listInputs(inputs) {
 }
 
 function noteOn(midiNote, velocity) {
-    synth.triggerAttack(midiNoteToFreq[midiNote], undefined, velocity);
+    synth.triggerAttackRelease(midiNoteToFreq[midiNote], "8n");
     createCircle(midiNote, velocity, 2);
     sendNoteOn({ midiNote, velocity });
 }
 
 function noteOff(midiNote, velocity) {
-    synth.triggerRelease(midiNoteToFreq[midiNote]);
-    sendNoteOff({ midiNote, velocity });
+    // synth.triggerRelease(midiNoteToFreq[midiNote]);
+    // sendNoteOff({ midiNote, velocity });
 }
 
 function onMIDIFailure(e) {

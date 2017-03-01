@@ -8,15 +8,85 @@
     <meta name="description" content="Learn to play piano">
     <link rel="stylesheet" type="text/css" href="./effects.css">
     <link rel="stylesheet" type="text/css" href="./main.css">
+    <link rel="stylesheet" type="text/css" href="./drumpad.css">
+
 </head>
 
 <body>
+    <!--DRUM PADS-->
+    <div id="drum-pad">
+
+        <div class="pad bgc-1" onmousedown="padOn(pad1)" onmouseup="padOff(pad1)">
+            <div id="pad1" class="pad-text ">
+                <div class="pad-name">kick</div>
+                <span>Q</span>
+            </div>
+        </div>
+
+        <div class="pad bgc-2" onmousedown="padOn(pad2)" onmouseup="padOff(pad2)">
+            <div id="pad2" class="pad-text">
+                <div class="pad-name">snare</div>
+                <span>W</span>
+            </div>
+        </div>
+
+        <div class="pad bgc-3" onmousedown="padOn(pad3)" onmouseup="padOff(pad3)">
+            <div id="pad3" class="pad-text">
+                <div class="pad-name">hat</div>
+                <span>E</span>
+            </div>
+        </div>
+
+        <div class="pad bgc-4" onmousedown="padOn(pad4)" onmouseup="padOff(pad4)">
+            <div id="pad4" class="pad-text">
+                <div class="pad-name">tom</div>
+                <span>A</span>
+            </div>
+        </div>
+
+        <div class="pad bgc-5" onmousedown="padOn(pad5)" onmouseup="padOff(pad5)">
+            <div id="pad5" class="pad-text">
+                <div class="pad-name">stick</div>
+                <span>S</span>
+            </div>
+        </div>
+
+        <div class="pad bgc-6" onmousedown="padOn(pad6)" onmouseup="padOff(pad6)">
+            <div id="pad6" class="pad-text">
+                <div class="pad-name">maracas</div>
+                <span>D</span>
+            </div>
+        </div>
+
+        <div class="pad bgc-7" onmousedown="padOn(pad7)" onmouseup="padOff(pad7)">
+            <div id="pad7" class="pad-text">
+                <div class="pad-name">clav</div>
+                <span>Z</span>
+            </div>
+        </div>
+
+        <div class="pad bgc-8" onmousedown="padOn(pad8)" onmouseup="padOff(pad8)">
+            <div id="pad8" class="pad-text">
+                <div class="pad-name">conga</div>
+                <span>X</span>
+            </div>
+        </div>
+
+        <div class="pad bgc-9" onmousedown="padOn(pad9)" onmouseup="padOff(pad9)">
+            <div id="pad9" class="pad-text">
+                <div class="pad-name">cowbell</div>
+                <span>C</span>
+            </div>
+        </div>
+
+    </div>
 
     <div id="effects-layer"></div>
     <script src='node_modules/socket.io-client/dist/socket.io.js'></script>
     <script src="node_modules/tone/build/Tone.js"></script>
     <script src="midi.js"></script>
     <script src="main.js"></script>
+    <script src="drumpad.js"></script>
 
 </body>
 

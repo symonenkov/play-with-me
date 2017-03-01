@@ -32,10 +32,6 @@ io.on('connection', function(socket) {
         socket.broadcast.emit('note on', {
             note: data
         });
-        // we tell the client to execute 'note off'
-        socket.broadcast.emit('note off', {
-            note: data
-        });
     });
 
     // when the user disconnects.. perform this
