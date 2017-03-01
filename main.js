@@ -8,7 +8,7 @@
 
   // Whenever the server emits 'note on', trigger attack this note
   socket.on('note on', function(data) {
-      synth.triggerAttack(midiNoteToFreq[data.note.midiNote], undefined, data.note.velocity);
+      synth.triggerAttack(midiNoteToFreq[data.note.midiNote], "8n");
       // synth.triggerAttackRelease(midiNoteToFreq[data.note.midiNote], '+2s', data.note.velocity);
       createCircle(data.note.midiNote, data.note.velocity, 2);
   });
